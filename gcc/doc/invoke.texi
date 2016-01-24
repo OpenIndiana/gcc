@@ -16769,6 +16769,10 @@ addresses and sizes of sections.  Programs can be statically linked only.  The
 @option{-mcmodel=large} option is incompatible with @option{-mabi=ilp32},
 @option{-fpic} and @option{-fPIC}.
 
+@item -msave-args
+@opindex msave-args
+Save integer-sized arguments on the stack on function entry.
+
 @item -mstrict-align
 @itemx -mno-strict-align
 @opindex mstrict-align
