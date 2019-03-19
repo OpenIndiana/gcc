@@ -81,6 +81,10 @@
 #include <pthread.h>
 #include <unistd.h>
 
+#if defined(sun) || defined(__sun) || defined(__sun__)
+#include <strings.h>
+#endif
+
 #if defined HAVE_ALLOCA_H
 # include <alloca.h>
 #elif defined __GNUC__
@@ -108,6 +112,14 @@ void *alloca (size_t);
 #   include <sys/resource.h>
 // BSD does not define MAP_ANONYMOUS, but *does* define MAP_ANON. Aren't standards great!
 #   define MAP_ANONYMOUS MAP_ANON
+#endif
+
+#if defined(sun) || defined(__sun) || defined(__sun__)
+#include <sys/resource.h>
+#include <dlfcn.h>
+#ifndef MAP_ANONYMOUS
+#define MAP_ANONYMOUS MAP_ANON
+#endif
 #endif
 
 #ifdef  __VXWORKS__

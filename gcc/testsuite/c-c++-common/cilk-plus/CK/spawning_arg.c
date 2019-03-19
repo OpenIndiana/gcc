@@ -1,6 +1,6 @@
-/* { dg-do run  { target { i?86-*-* x86_64-*-* } } } */
+/* { dg-do run  { target { i?86-*-* x86_64-*-* sparc-*-* sparcv9-*-* __sparc*-*-* } } } */
 /* { dg-options "-fcilkplus" } */
-/* { dg-additional-options "-lcilkrts" { target { i?86-*-* x86_64-*-* } } } */
+/* { dg-additional-options "-lcilkrts" { target { i?86-*-* x86_64-*-* sparc-*-* sparcv9-*-* __sparc*-*-* } } } */
 
 #ifdef __cplusplus
 extern "C" {

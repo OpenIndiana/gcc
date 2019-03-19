@@ -1,5 +1,5 @@
 /* { dg-do compile } */
-/* { dg-do run  { target { i?86-*-* x86_64-*-* } } } */
+/* { dg-do run  { target { i?86-*-* x86_64-*-* sparc-*-* sparcv9-*-* __sparc*-*-* } } } */
 /* { dg-options "-fcilkplus" } */
 
 int main (void)

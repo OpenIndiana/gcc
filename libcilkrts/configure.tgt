@@ -37,6 +37,12 @@ case "${target}" in
     ;;
   i?86-*-*)
     ;;
+  sparc-*-*)
+    ;;
+  sparc*-*-*)
+    ;;
+  __sparc*-*-*)
+    ;;
   *-*-*)
     UNSUPPORTED=1
     ;;

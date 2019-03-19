@@ -43,22 +43,55 @@
 #include "os.h"
 #include "sysdep.h"
 
+#if defined(__sparc) || defined(__sparc__)
+# include <sys/times.h>
+# include <limits.h>
+#endif
+
 /*
  * The cycle counter is used for debugging.  This funciton is only called if
  * CILK_PROFILE is defined when the runtime is built.
  */
 COMMON_SYSDEP unsigned long long __cilkrts_getticks(void)
 {
+#if defined(__sparc) || defined(__sparc__)
+  struct tms t;
+
+  if (times(&t) != (clock_t) -1)
+    return (unsigned long long) (t.tms_utime + t.tms_stime);
+
+  return 0ULL;
+#else
 #   warning "unimplemented cycle counter"
     return 0;
+#endif
 }
+
+#if defined(__sparc) || defined(__sparc__)
+#include "os-fence.h"
+/*
+ * SPARC V9 __cilkrts_fence implementation
+ */
+COMMON_SYSDEP void __cilkrts_fence(void)
+{
+  __asm__ __volatile__ ("membar #LoadLoad | #LoadStore | #StoreStore | #StoreLoad" ::: "memory");
+}
+#endif
 
 /*
  * A "short pause" - called from the Cilk runtime's spinloops.
  */
 COMMON_SYSDEP void __cilkrts_short_pause(void)
 {
+#if defined(__sparc) || defined(__sparc__)
+  /* spin around for 8 cycles */
+  __asm__ __volatile__("rd %ccr, %g0");
+  __asm__ __volatile__("rd %ccr, %g0");
+  __asm__ __volatile__("rd %ccr, %g0");
+  __asm__ __volatile__("rd %ccr, %g0");
+#else
 #   warning __cilkrts_short_pause empty
+#endif
 }
 
 /*

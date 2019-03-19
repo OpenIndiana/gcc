@@ -103,5 +103,5 @@ __cilkrts_stack_free(
 
     // Just free the allocated memory to the heap since we don't know
     // how to expand/contract the calling frame
-    vla_internal_heap_free(t, full_size);
+    vla_internal_heap_free(sf, full_size);
 }
