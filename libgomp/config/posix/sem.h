@@ -49,8 +49,8 @@
 
 struct gomp_sem
 {
-  pthread_mutex_t	mutex;
-  pthread_cond_t	cond;
+  pthread_mutex_t	mutex __attribute__((__aligned__(8)));
+  pthread_cond_t	cond __attribute__((__aligned__(8)));
   int			value;
 };
 

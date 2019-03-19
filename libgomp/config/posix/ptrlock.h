@@ -29,7 +29,10 @@
 #ifndef GOMP_PTRLOCK_H
 #define GOMP_PTRLOCK_H 1
 
-typedef struct { void *ptr; gomp_mutex_t lock; } gomp_ptrlock_t;
+typedef struct {
+  void *ptr;
+  gomp_mutex_t lock;
+} gomp_ptrlock_t __attribute__((__aligned__(8)));
 
 static inline void gomp_ptrlock_init (gomp_ptrlock_t *ptrlock, void *ptr)
 {

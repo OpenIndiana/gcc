@@ -32,16 +32,24 @@
    reflect the shape of the two types.  Their internals are private
    to the library.  */
 
+#if defined(__x86_64__) || defined(__amd64) || defined(__sparc)
+#define OMP_LOCK_ALIGN 8
+#define OMP_NEST_LOCK_ALIGN 8
+#else
+#define OMP_LOCK_ALIGN 4
+#define OMP_NEST_LOCK_ALIGN 4
+#endif
+
 typedef struct
 {
   unsigned char _x[@OMP_LOCK_SIZE@] 
-    __attribute__((__aligned__(@OMP_LOCK_ALIGN@)));
+    __attribute__((__aligned__(OMP_LOCK_ALIGN)));
 } omp_lock_t;
 
 typedef struct
 {
   unsigned char _x[@OMP_NEST_LOCK_SIZE@] 
-    __attribute__((__aligned__(@OMP_NEST_LOCK_ALIGN@)));
+    __attribute__((__aligned__(OMP_NEST_LOCK_ALIGN)));
 } omp_nest_lock_t;
 #endif
 

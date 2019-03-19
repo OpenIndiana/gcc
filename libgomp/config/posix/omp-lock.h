@@ -11,13 +11,28 @@
 #include <semaphore.h>
 
 typedef pthread_mutex_t omp_lock_25_t;
-typedef struct { pthread_mutex_t lock; int count; } omp_nest_lock_25_t;
+
+typedef struct {
+  pthread_mutex_t lock;
+  int count;
+} omp_nest_lock_25_t __attribute__((__aligned__(8)));
+
 #ifdef HAVE_BROKEN_POSIX_SEMAPHORES
 /* If we don't have working semaphores, we'll make all explicit tasks
    tied to the creating thread.  */
 typedef pthread_mutex_t omp_lock_t;
-typedef struct { pthread_mutex_t lock; int count; void *owner; } omp_nest_lock_t;
+
+typedef struct {
+  pthread_mutex_t lock;
+  int count;
+  void *owner;
+} omp_nest_lock_t __attribute__((__aligned__(8)));
 #else
 typedef sem_t omp_lock_t;
-typedef struct { sem_t lock; int count; void *owner; } omp_nest_lock_t;
+typedef struct {
+  sem_t lock;
+  int count;
+  void *owner;
+} omp_nest_lock_t __attribute__((__aligned__(8)));
 #endif
+
