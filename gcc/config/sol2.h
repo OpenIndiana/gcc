@@ -155,15 +155,22 @@ along with GCC; see the file COPYING3.  If not see
 #define SUPPORTS_INIT_PRIORITY HAVE_INITFINI_ARRAY_SUPPORT
 
 #undef STARTFILE_ARCH_SPEC
-#define STARTFILE_ARCH_SPEC "%{ansi:values-Xc.o%s} \
-			    %{!ansi:values-Xa.o%s}"
+#define STARTFILE_ARCH_SPEC "%{std=c1x|std=gnu1x:values-Xc.o%s values-xpg6.o%s; \
+			       std=c11|std=gnu11:values-Xc.o%s values-xpg6.o%s; \
+			       std=c99|std=gnu99:values-Xc.o%s values-xpg6.o%s; \
+			       std=c9x|std=gnu9x:values-Xc.o%s values-xpg6.o%s; \
+			       std=c++0x|std=gnu++0x:values-Xc.o%s; \
+			       std=c++11|std=gnu++11:values-Xc.o%s; \
+			       std=c++03|std=gnu++03:values-Xc.o%s; \
+			       :values-Xa.o%s}"
+
 
 #if defined(HAVE_LD_PIE) && defined(HAVE_SOLARIS_CRTS)
 #define STARTFILE_CRTBEGIN_SPEC "%{static:crtbegin.o%s; \
 				   shared|" PIE_SPEC ":crtbeginS.o%s; \
 				   :crtbegin.o%s}"
 #else
-#define STARTFILE_CRTBEGIN_SPEC	"crtbegin.o%s"
+#define STARTFILE_CRTBEGIN_SPEC	"%{shared:crtbeginS.o%s;:crtbegin.o%s}"
 #endif
 
 #if SUPPORTS_INIT_PRIORITY
@@ -208,7 +215,7 @@ along with GCC; see the file COPYING3.  If not see
 			       shared|" PIE_SPEC ":crtendS.o%s; \
 			       :crtend.o%s}"
 #else
-#define ENDFILE_CRTEND_SPEC "crtend.o%s"
+#define ENDFILE_CRTEND_SPEC "%{shared:crtendS.o%s;:crtend.o%s}"
 #endif
 
 #undef  ENDFILE_SPEC

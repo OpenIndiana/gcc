@@ -399,6 +399,8 @@ DW_AT (DW_AT_GNU_pubtypes, 0x2135)
 DW_AT (DW_AT_GNU_discriminator, 0x2136)
 /* VMS extensions.  */
 DW_AT (DW_AT_VMS_rtnbeg_pd_address, 0x2201)
+/* Sun extension. */
+DW_AT (DW_AT_SUN_amd64_parmdump, 0x2224)
 /* GNAT extensions.  */
 /* GNAT descriptive type.
    See http://gcc.gnu.org/wiki/DW_AT_GNAT_descriptive_type .  */

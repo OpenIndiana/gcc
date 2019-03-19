@@ -339,7 +339,7 @@ Objective-C and Objective-C++ Dialects}.
 -fauto-inc-dec -fbranch-probabilities @gol
 -fbranch-target-load-optimize -fbranch-target-load-optimize2 @gol
 -fbtr-bb-exclusive -fcaller-saves @gol
--fcombine-stack-adjustments -fconserve-stack @gol
+-fclone-functions -fcombine-stack-adjustments -fconserve-stack @gol
 -fcompare-elim -fcprop-registers -fcrossjumping @gol
 -fcse-follow-jumps -fcse-skip-blocks -fcx-fortran-rules @gol
 -fcx-limited-range @gol
@@ -7772,6 +7772,12 @@ int f() @{
 The @option{-fstrict-aliasing} option is enabled at levels
 @option{-O2}, @option{-O3}, @option{-Os}.
 
+@item -fstrict-calling-conventions
+@opindex fstrict-calling-conventions
+Use strict ABI calling conventions even with local functions.
+This disable certain optimizations that may cause GCC to call local
+functions in a manner other than that described by the ABI.
+
 @item -fstrict-overflow
 @opindex fstrict-overflow
 Allow the compiler to assume strict signed overflow rules, depending
@@ -8193,6 +8199,15 @@ to these tools. With non fat LTO makefiles need to be modified to use them.
 
 The default is @option{-fno-fat-lto-objects} on targets with linker plugin
 support.
+
+@item -fno-clone-functions
+@opindex fno-clone-functions
+Forbid the implicit cloning of functions implicit in certain
+optimizations.  This also effectively will disable any optimization
+which wishes to clone functions, equivalent to each function having
+the ``noclone'' attribute.  This allows the prevention of the
+dissociation of a piece of text from an intelligible and expected
+symbol name, which may hamper debugging and tracing.
 
 @item -fcompare-elim
 @opindex fcompare-elim
@@ -12880,6 +12895,10 @@ be statically or dynamically linked.  This is the default code model.
 Generate code for the large code model.  This makes no assumptions about
 addresses and sizes of sections.  Pointers are 64 bits.  Programs can be
 statically linked only.
+
+@item -msave-args
+@opindex msave-args
+Save integer-sized arguments on the stack on function entry.
 
 @item -mstrict-align
 @opindex mstrict-align

@@ -1730,6 +1730,10 @@ symtab_node::noninterposable_alias (void)
   tree new_decl;
   symtab_node *new_node = NULL;
 
+  /* Do not allow a clone to be created if function-cloning is disabled */
+  if (!flag_clone_functions)
+	  return NULL;
+
   /* First try to look up existing alias or base object
      (if that is already non-overwritable).  */
   symtab_node *node = ultimate_alias_target ();
